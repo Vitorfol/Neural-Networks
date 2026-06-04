@@ -1,0 +1,11 @@
+torch
+torchvision
+torchaudio
+torch-geometric
+numpy
+pandas
+matplotlib
+scikit-learn
+seaborn
+ucimlrepo
+ipykernel
