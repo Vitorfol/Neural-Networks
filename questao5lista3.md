@@ -105,50 +105,26 @@ Portanto, tokenização, padding, truncamento e tamanho máximo da sequência n�
 
 ## c) Escolha da arquitetura sob a perspectiva de um cientista de dados
 
-A escolha da arquitetura deve considerar múltiplos fatores, e não apenas a complexidade do modelo.
+Ao escolher uma arquitetura para resolver um problema de aprendizado de máquina, é necessário considerar diversos fatores. Não existe uma bala de prata ou um modelo universal que seja sempre a melhor escolha. O primeiro ponto a ser analisado é o próprio problema e a estrutura do dado. A partir disso, é possível restringir a família de modelos mais adequada e começar um direcionamento técnico mais coerente.
 
-### Estrutura do dado
+A estrutura do dado é fundamental porque diferentes tipos de entrada exigem diferentes formas de modelagem. Dados sequenciais, como textos, áudio, séries temporais e vídeos, possuem dependência de ordem; nesse caso, arquiteturas como RNN, LSTM, GRU e Transformers fazem sentido. Por outro lado, para dados sem estrutura sequencial clara, outras famílias de modelos podem ser mais adequadas. Portanto, antes de escolher uma arquitetura, é necessário entender o formato do dado, sua organização e o tipo de padrão que se espera aprender.
 
-[discutir como a natureza do dado influencia a escolha]
+O tamanho da base também influencia diretamente a escolha. Modelos mais complexos, com muitos parâmetros, tendem a precisar de mais dados para generalizar bem. Se a base for pequena, uma arquitetura muito grande pode decorar os exemplos de treino e sofrer overfitting. Já bases maiores permitem treinar modelos mais robustos, embora também aumentem o custo computacional. Por isso, a escolha do modelo deve considerar tanto a quantidade de exemplos quanto a diversidade dos dados.
 
-### Tamanho da base
+O tamanho médio das sequências é outro fator importante. Sequências curtas, como mensagens SMS, normalmente possuem padrões mais diretos e podem ser bem modeladas por arquiteturas mais leves, como GRU. Sequências longas, como reviews de filmes, exigem maior capacidade de manter informação ao longo do tempo, favorecendo arquiteturas como LSTM ou Transformers. Além disso, quanto maior a sequência, maior tende a ser o custo de processamento, a necessidade de memória e o risco de truncar informações relevantes.
 
-[discutir relação entre tamanho da base e capacidade do modelo]
+A necessidade de modelar dependências longas também deve orientar a escolha. Em alguns problemas, a informação relevante está concentrada em poucas palavras ou em trechos próximos. Em outros, o significado depende da relação entre partes distantes do texto, como ocorre em reviews com contraste, negação ou mudança de opinião ao longo da avaliação. Nesses casos, modelos mais simples podem não ser suficientes, e arquiteturas com maior capacidade contextual passam a fazer mais sentido.
 
-### Tamanho médio das sequências
+O custo de treinamento é um fator prático que não pode ser ignorado. Modelos maiores exigem mais tempo, mais memória e, muitas vezes, hardware especializado. Não faz sentido escolher um Transformer grande se o problema pode ser resolvido adequadamente por uma GRU consumindo uma fração do poder computacional. Por outro lado, também não faz sentido insistir em um modelo simples quando ele claramente não tem capacidade para capturar os padrões necessários. A decisão deve equilibrar desempenho e viabilidade.
 
-[discutir impacto do comprimento das sequências]
+O custo de inferência também precisa ser considerado, principalmente em aplicações reais. Após o treinamento, o modelo pode precisar responder rapidamente, processar muitos exemplos por segundo ou rodar em ambientes com poucos recursos. Nesse caso, uma arquitetura mais leve pode ser preferível mesmo que tenha desempenho um pouco menor. A melhor escolha depende não apenas da métrica final, mas também de como o modelo será usado.
 
-### Necessidade de modelar dependências longas
+A interpretabilidade é outro ponto relevante. Modelos mais complexos, como Transformers, podem atingir melhores resultados, mas tendem a ser mais difíceis de interpretar. Em contextos nos quais é necessário justificar decisões, auditar erros ou explicar previsões, essa dificuldade pode pesar contra modelos muito complexos. Assim, dependendo do objetivo do projeto, um modelo mais simples e mais interpretável pode ser mais adequado.
 
-[discutir quando isso é crítico e quais modelos lidam melhor com isso]
+A disponibilidade de modelos pré-treinados também altera a decisão. Quando existe um modelo pré-treinado adequado ao domínio, como o DistilBERT para tarefas de linguagem natural, é possível aproveitar representações já aprendidas em grandes bases textuais. Isso pode melhorar o desempenho e reduzir a necessidade de treinar tudo do zero. Entretanto, esse ganho vem acompanhado de maior custo computacional e maior complexidade de uso.
 
-### Custo de treinamento
+O risco de overfitting deve ser avaliado em conjunto com a complexidade da arquitetura. Modelos muito simples podem sofrer underfitting, como observado na configuração mais simples da LSTM, enquanto modelos muito complexos podem se ajustar demais aos dados de treino e perder capacidade de generalização. O cientista de dados precisa observar métricas de treino, validação e teste para entender se o modelo está aprendendo de fato ou apenas memorizando padrões.
 
-[discutir tempo, memória, hardware e viabilidade prática]
+Por fim, o objetivo do projeto deve orientar toda a escolha. O modelo é apenas um mecanismo para resolver um problema. Se o objetivo é obter máxima qualidade e há recursos computacionais suficientes, uma arquitetura mais complexa pode ser justificada. Se o objetivo é eficiência, baixo custo, simplicidade de implantação ou resposta rápida, modelos mais leves podem ser preferíveis.
 
-### Custo de inferência
-
-[discutir velocidade de uso em produção]
-
-### Interpretabilidade
-
-[discutir facilidade ou dificuldade de interpretar comportamento do modelo]
-
-### Disponibilidade de modelos pré-treinados
-
-[discutir vantagem prática de aproveitar modelos existentes]
-
-### Risco de overfitting
-
-[discutir relação entre complexidade, tamanho da base e generalização]
-
-### Objetivo do projeto
-
-[discutir como o objetivo final influencia a escolha da arquitetura]
-
----
-
-## Conclusão
-
-Em síntese, a escolha da arquitetura deve ser guiada pelo tipo de dado, pela tarefa, pelo custo computacional e pelo desempenho necessário no problema. Não faz sentido escolher um modelo apenas por ser mais moderno ou mais complexo, pois arquiteturas mais simples podem ser suficientes e até mais adequadas em cenários com dados curtos, menor custo computacional ou necessidade de implantação mais leve. Por outro lado, modelos mais sofisticados podem ser vantajosos quando o problema exige maior capacidade de representação e modelagem de contexto.
+Assim, não faz sentido escolher uma arquitetura apenas por ser mais moderna ou mais complexa. A escolha deve partir do problema, dos dados, das restrições práticas e do objetivo final. Todo modelo possui trade-offs, e não há uma solução universal em redes neurais ou em inteligência artificial. O papel do cientista de dados é justamente entender esses trade-offs e selecionar a arquitetura mais adequada para o contexto.
