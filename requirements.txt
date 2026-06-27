@@ -2,6 +2,8 @@ torch
 torchvision
 torchaudio
 torch-geometric
+datasets
+transformers
 numpy
 pandas
 matplotlib
