@@ -11,3 +11,4 @@ scikit-learn
 seaborn
 ucimlrepo
 ipykernel
+nbconvert
